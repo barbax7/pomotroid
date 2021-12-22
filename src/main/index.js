@@ -74,6 +74,13 @@ ipcMain.on('toggle-alwaysOnTop', (event, arg) => {
 
 let breakAlwaysOnTop
 
+ipcMain.on('toggle-focusAlwaysOnTop', (event, arg) => {
+  focusAlwaysOnTop = arg
+  if (focusAlwaysOnTop === false) {
+    mainWindow.setAlwaysOnTop(true)
+  }
+})
+
 ipcMain.on('toggle-breakAlwaysOnTop', (event, arg) => {
   breakAlwaysOnTop = arg
   if (breakAlwaysOnTop === false) {

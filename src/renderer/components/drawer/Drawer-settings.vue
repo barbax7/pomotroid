@@ -11,6 +11,17 @@
     </div>
     <transition name="slide-left" mode="in-out">
       <div class="Setting-wrapper" v-show="alwaysOnTop">
+        <p class="Setting-title">Deactivate Always On Top on Focus</p>
+        <div
+          class="Checkbox"
+          @click="selectFocusAlwaysOnTop"
+          :class="focusAlwaysOnTop ? 'is-active' : 'is-inactive'"
+          ref="focusAlwaysOnTopCheckbox"
+        ></div>
+      </div>
+    </transition>
+    <transition name="slide-left" mode="in-out">
+      <div class="Setting-wrapper" v-show="alwaysOnTop">
         <p class="Setting-title">Deactivate Always On Top on Breaks</p>
         <div
           class="Checkbox"
@@ -170,7 +181,16 @@ export default {
         this.$refs.breakAlwaysOnTopCheckbox.click()
       }
     },
+    selectFocusAlwaysOnTop() {
+      const payload = {
+        key: 'focusAlwaysOnTop',
+        val: !this.focusAlwaysOnTop
+      }
 
+      ipcRenderer.send('toggle-focusAlwaysOnTop', !this.focusAlwaysOnTop)
+      this.$store.dispatch('setSetting', payload)
+      this.$store.dispatch('setViewState', payload)
+    },
     selectBreakAlwaysOnTop() {
       const payload = {
         key: 'breakAlwaysOnTop',
